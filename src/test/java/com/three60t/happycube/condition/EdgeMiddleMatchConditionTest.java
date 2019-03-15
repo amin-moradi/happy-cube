@@ -19,7 +19,7 @@ public class EdgeMiddleMatchConditionTest {
     }
 
     @Test
-    public void isMatchCondition_InvalidMatch_Success() {
+    public void isMatchCondition_CorrectMatch_Success() {
         Condition condition = new EdgeMiddleMatchCondition(PuzzleSide.TOP, PuzzlePieceEdge.TOP, PuzzleSide.BACK, PuzzlePieceEdge.TOP);
         Assert.assertTrue(condition.isMatchCondition(puzzle));
     }

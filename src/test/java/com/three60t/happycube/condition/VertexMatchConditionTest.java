@@ -19,7 +19,7 @@ public class VertexMatchConditionTest {
     }
 
     @Test
-    public void isMatchCondition_InvalidMatch_Success() {
+    public void isMatchCondition_CorrectMatch_Success() {
         Condition condition = new VertexMatchCondition(PuzzleSide.TOP, PuzzlePieceEdge.TOP, 0, PuzzleSide.BACK, PuzzlePieceEdge.TOP, 4, PuzzleSide.BOTTOM, PuzzlePieceEdge.TOP, 4);
         Assert.assertTrue(condition.isMatchCondition(puzzle));
     }
