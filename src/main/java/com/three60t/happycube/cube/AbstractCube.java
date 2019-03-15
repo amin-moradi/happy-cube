@@ -49,6 +49,17 @@ public abstract class AbstractCube implements Cube {
         CONDITIONS.add(new VertexMatchCondition(PuzzleSide.BOTTOM, PuzzlePieceEdge.TOP, 0, PuzzleSide.LEFT, PuzzlePieceEdge.BOTTOM, 0, PuzzleSide.BACK, PuzzlePieceEdge.BOTTOM, 4));
         CONDITIONS.add(new VertexMatchCondition(PuzzleSide.BOTTOM, PuzzlePieceEdge.BOTTOM, 4, PuzzleSide.RIGHT, PuzzlePieceEdge.BOTTOM, 0, PuzzleSide.FRONT, PuzzlePieceEdge.BOTTOM, 4));
         CONDITIONS.add(new VertexMatchCondition(PuzzleSide.BOTTOM, PuzzlePieceEdge.BOTTOM, 0, PuzzleSide.LEFT, PuzzlePieceEdge.BOTTOM, 4, PuzzleSide.FRONT, PuzzlePieceEdge.BOTTOM, 0));
+
+        // initialize ORIENTATIONS (contains 8 ORIENTATIONS)
+        ORIENTATIONS.add(new Orientation(PuzzlePieceEdge.TOP, PuzzlePieceEdge.RIGHT, PuzzlePieceEdge.BOTTOM, PuzzlePieceEdge.LEFT)); // Orientation1
+        ORIENTATIONS.add(new Orientation(PuzzlePieceEdge.LEFT, PuzzlePieceEdge.TOP, PuzzlePieceEdge.RIGHT, PuzzlePieceEdge.BOTTOM)); // Orientation2
+        ORIENTATIONS.add(new Orientation(PuzzlePieceEdge.BOTTOM, PuzzlePieceEdge.LEFT, PuzzlePieceEdge.TOP, PuzzlePieceEdge.RIGHT)); // Orientation3
+        ORIENTATIONS.add(new Orientation(PuzzlePieceEdge.RIGHT, PuzzlePieceEdge.BOTTOM, PuzzlePieceEdge.LEFT, PuzzlePieceEdge.TOP)); // Orientation4
+        // ORIENTATIONS by mirroring
+        ORIENTATIONS.add(new Orientation(PuzzlePieceEdge.TOP, PuzzlePieceEdge.LEFT, PuzzlePieceEdge.BOTTOM, PuzzlePieceEdge.RIGHT)); // Orientation5
+        ORIENTATIONS.add(new Orientation(PuzzlePieceEdge.RIGHT, PuzzlePieceEdge.TOP, PuzzlePieceEdge.LEFT, PuzzlePieceEdge.BOTTOM)); // Orientation6
+        ORIENTATIONS.add(new Orientation(PuzzlePieceEdge.BOTTOM, PuzzlePieceEdge.RIGHT, PuzzlePieceEdge.TOP, PuzzlePieceEdge.LEFT)); // Orientation7
+        ORIENTATIONS.add(new Orientation(PuzzlePieceEdge.LEFT, PuzzlePieceEdge.BOTTOM, PuzzlePieceEdge.RIGHT, PuzzlePieceEdge.TOP)); // Orientation8
     }
 
     AbstractCube() {
