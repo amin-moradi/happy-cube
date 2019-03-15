@@ -1,5 +1,7 @@
 package com.three60t.happycube.puzzle;
 
+import com.three60t.happycube.enums.PuzzlePieceEdge;
+
 /**
  * This class contains decimal values of each edge of puzzle-piece (4 edges --> top, bottom, left, right)
  *
@@ -34,6 +36,21 @@ public class PuzzlePiece {
 
     public Integer getRightDecimalValue() {
         return rightDecimalValue;
+    }
+
+    public Integer getDecimalValueBySide(PuzzlePieceEdge edge) {
+        switch (edge) {
+            case TOP:
+                return getTopDecimalValue();
+            case BOTTOM:
+                return getBottomDecimalValue();
+            case LEFT:
+                return getLeftDecimalValue();
+            case RIGHT:
+                return getRightDecimalValue();
+            default:
+                return null;
+        }
     }
 
     @Override
