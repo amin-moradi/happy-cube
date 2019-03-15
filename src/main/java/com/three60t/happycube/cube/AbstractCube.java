@@ -66,6 +66,10 @@ public abstract class AbstractCube implements Cube {
         this.inputPuzzle = initiateCube();
     }
 
+    public Puzzle getInputPuzzle() {
+        return inputPuzzle;
+    }
+
     @Override
     public void findSolutions() {
         //todo find solutions
