@@ -7,8 +7,15 @@ import com.three60t.happycube.enums.PuzzlePieceEdge;
 import com.three60t.happycube.enums.PuzzleSide;
 import com.three60t.happycube.orientation.Orientation;
 import com.three60t.happycube.puzzle.Puzzle;
+import com.three60t.happycube.puzzle.PuzzlePiece;
+import com.three60t.happycube.utils.Permutations;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * This abstract class contains all static data structures e.g. CONDITIONS, ORIENTATIONS
@@ -23,7 +30,7 @@ public abstract class AbstractCube implements Cube {
     private final static List<Condition> CONDITIONS = new ArrayList<>(20); //For each puzzle-piece, we have to check 20 conditions according to analysis (12 for edges, 8 for vertices)
     private final static List<Orientation> ORIENTATIONS = new ArrayList<>(8); //Each puzzle-piece can have 8 different orientations according to rotating and mirroring
     private Puzzle inputPuzzle; // This field contains input data given by concrete classes, e.g. BlueCube
-    private Set<Puzzle> solutions = Collections.synchronizedSet(new HashSet<>()); // This field contains all possible solutions for given puzzle
+    private ConcurrentHashMap<Integer, Puzzle> solutions = new ConcurrentHashMap<>(); // This field contains solution(s) (In the base task you are only required to find one solution)
 
     static {
         //conditions for middle of edges (not vertices) --> 12 conditions
@@ -71,12 +78,66 @@ public abstract class AbstractCube implements Cube {
     }
 
     @Override
-    public void findSolutions() {
-        //todo find solutions
+    public Map<Integer, Puzzle> findSolutions() {
+        //find all possible cases that 6 puzzlePieces can be placed in 6 places (side of cube)
+        if (Permutations.of(Arrays.asList(1, 2, 3, 4, 5, 6)).map(p -> p.collect(Collectors.toList())).map(puzzleNumbers -> new Puzzle(this.inputPuzzle.getPuzzlePiece(PuzzleSide.findByValue(puzzleNumbers.get(0))),
+                this.inputPuzzle.getPuzzlePiece(PuzzleSide.findByValue(puzzleNumbers.get(1))),
+                this.inputPuzzle.getPuzzlePiece(PuzzleSide.findByValue(puzzleNumbers.get(2))),
+                this.inputPuzzle.getPuzzlePiece(PuzzleSide.findByValue(puzzleNumbers.get(3))),
+                this.inputPuzzle.getPuzzlePiece(PuzzleSide.findByValue(puzzleNumbers.get(4))),
+                this.inputPuzzle.getPuzzlePiece(PuzzleSide.findByValue(puzzleNumbers.get(5))))).anyMatch(this::checkStatesByOrientations)) {
+            return solutions;
+        }
+        return null;
     }
 
     @Override
     public void saveSolutions() {
         //todo save solutions to file
+    }
+
+    /**
+     * This method generate all possible cases contains all rotating and mirroring cases of each inputPuzzle
+     * and check conditions for each one.
+     *
+     * @param puzzle : input puzzle from permutations step
+     * @return : return true, if can find any solution, otherwise return flase.
+     */
+    private boolean checkStatesByOrientations(Puzzle puzzle) {
+        for (int top = 1; top <= ORIENTATIONS.size(); top++)
+            for (int bottom = 1; bottom <= ORIENTATIONS.size(); bottom++)
+                for (int left = 1; left <= ORIENTATIONS.size(); left++)
+                    for (int right = 1; right <= ORIENTATIONS.size(); right++)
+                        for (int back = 1; back <= ORIENTATIONS.size(); back++)
+                            for (int front = 1; front <= ORIENTATIONS.size(); front++) {
+                                final Puzzle orientationPuzzle = new Puzzle(new PuzzlePiece(puzzle.getTopPuzzlePiece(), ORIENTATIONS.get(top - 1)),
+                                        new PuzzlePiece(puzzle.getBottomPuzzlePiece(), ORIENTATIONS.get(bottom - 1)),
+                                        new PuzzlePiece(puzzle.getLeftPuzzlePiece(), ORIENTATIONS.get(left - 1)),
+                                        new PuzzlePiece(puzzle.getRightPuzzlePiece(), ORIENTATIONS.get(right - 1)),
+                                        new PuzzlePiece(puzzle.getBackPuzzlePiece(), ORIENTATIONS.get(back - 1)),
+                                        new PuzzlePiece(puzzle.getFrontPuzzlePiece(), ORIENTATIONS.get(front - 1)));
+                                if (canMatchConditions(orientationPuzzle)) {
+                                    solutions.put(solutions.size(), orientationPuzzle);
+                                    System.out.println("Solution : " + orientationPuzzle);
+                                    return true;
+                                }
+                            }
+        return false;
+    }
+
+    /**
+     * This method check all conditions for input puzzle.
+     *
+     * @param puzzle : input puzzle
+     * @return : return true, if can match all conditions, otherwise return flase.
+     */
+    private boolean canMatchConditions(Puzzle puzzle) {
+        //this method is responsible for check some conditions and decide that the current case is solution or not.
+        for (Condition condition : CONDITIONS) {
+            if (!condition.isMatchCondition(puzzle)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

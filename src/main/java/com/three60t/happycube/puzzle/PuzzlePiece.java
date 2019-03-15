@@ -1,6 +1,7 @@
 package com.three60t.happycube.puzzle;
 
 import com.three60t.happycube.enums.PuzzlePieceEdge;
+import com.three60t.happycube.orientation.Orientation;
 
 /**
  * This class contains decimal values of each edge of puzzle-piece (4 edges --> top, bottom, left, right)
@@ -20,6 +21,13 @@ public class PuzzlePiece {
         this.bottomDecimalValue = Integer.parseInt(String.valueOf(puzzleArray[4][0]) + String.valueOf(puzzleArray[4][1]) + String.valueOf(puzzleArray[4][2]) + String.valueOf(puzzleArray[4][3]) + String.valueOf(puzzleArray[4][4]), 2);
         this.leftDecimalValue = Integer.parseInt(String.valueOf(puzzleArray[0][0]) + String.valueOf(puzzleArray[1][0]) + String.valueOf(puzzleArray[2][0]) + String.valueOf(puzzleArray[3][0]) + String.valueOf(puzzleArray[4][0]), 2);
         this.rightDecimalValue = Integer.parseInt(String.valueOf(puzzleArray[0][4]) + String.valueOf(puzzleArray[1][4]) + String.valueOf(puzzleArray[2][4]) + String.valueOf(puzzleArray[3][4]) + String.valueOf(puzzleArray[4][4]), 2);
+    }
+
+    public PuzzlePiece(PuzzlePiece puzzlePiece, Orientation orientation) {
+        this.topDecimalValue = puzzlePiece.getDecimalValueBySide(orientation.getEdge1());
+        this.bottomDecimalValue = puzzlePiece.getDecimalValueBySide(orientation.getEdge2());
+        this.leftDecimalValue = puzzlePiece.getDecimalValueBySide(orientation.getEdge3());
+        this.rightDecimalValue = puzzlePiece.getDecimalValueBySide(orientation.getEdge4());
     }
 
     public Integer getTopDecimalValue() {

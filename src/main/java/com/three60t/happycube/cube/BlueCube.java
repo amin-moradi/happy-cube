@@ -4,7 +4,7 @@ import com.three60t.happycube.puzzle.Puzzle;
 import com.three60t.happycube.puzzle.PuzzlePiece;
 
 /**
- * This concrete class is responsible for initiate input data that represents a puzzle (cube).
+ * This concrete class is responsible for initiate input data that represents blue puzzle (cube).
  * If you want to create another puzzle e.g. RedCube, YellowCube or PurpleCube, you have to
  * implement those classes and override initiateCube method.
  *
