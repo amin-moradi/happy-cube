@@ -9,15 +9,20 @@ import com.three60t.happycube.enums.PuzzleSide;
  * @author Hossein Moradi
  * @since 3/15/19
  */
-public class Puzzle {
-    private PuzzlePiece topPuzzlePiece;
-    private PuzzlePiece bottomPuzzlePiece;
-    private PuzzlePiece leftPuzzlePiece;
-    private PuzzlePiece rightPuzzlePiece;
-    private PuzzlePiece backPuzzlePiece;
-    private PuzzlePiece frontPuzzlePiece;
+public final class Puzzle {
+    private final PuzzlePiece topPuzzlePiece;
+    private final PuzzlePiece bottomPuzzlePiece;
+    private final PuzzlePiece leftPuzzlePiece;
+    private final PuzzlePiece rightPuzzlePiece;
+    private final PuzzlePiece backPuzzlePiece;
+    private final PuzzlePiece frontPuzzlePiece;
 
-    public Puzzle(PuzzlePiece topPuzzlePiece, PuzzlePiece bottomPuzzlePiece, PuzzlePiece leftPuzzlePiece, PuzzlePiece rightPuzzlePiece, PuzzlePiece backPuzzlePiece, PuzzlePiece frontPuzzlePiece) {
+    public Puzzle(PuzzlePiece topPuzzlePiece
+            , PuzzlePiece bottomPuzzlePiece
+            , PuzzlePiece leftPuzzlePiece
+            , PuzzlePiece rightPuzzlePiece
+            , PuzzlePiece backPuzzlePiece
+            , PuzzlePiece frontPuzzlePiece) {
         this.topPuzzlePiece = topPuzzlePiece;
         this.bottomPuzzlePiece = bottomPuzzlePiece;
         this.leftPuzzlePiece = leftPuzzlePiece;
@@ -51,7 +56,7 @@ public class Puzzle {
     }
 
     public Integer getEdgeDecimalValue(PuzzleSide side, PuzzlePieceEdge edge) {
-        return getPuzzlePiece(side).getDecimalValueBySide(edge);
+        return getPuzzlePiece(side).getDecimalValueBySideAndMirror(edge);
     }
 
     public PuzzlePiece getPuzzlePiece(PuzzleSide side) {
@@ -75,13 +80,13 @@ public class Puzzle {
 
     @Override
     public String toString() {
-        return "Puzzle{" +
-                "topPuzzlePiece=" + topPuzzlePiece +
-                ", bottomPuzzlePiece=" + bottomPuzzlePiece +
-                ", leftPuzzlePiece=" + leftPuzzlePiece +
-                ", rightPuzzlePiece=" + rightPuzzlePiece +
-                ", backPuzzlePiece=" + backPuzzlePiece +
-                ", frontPuzzlePiece=" + frontPuzzlePiece +
+        return "Puzzle{" + "\n" +
+                " topPuzzlePiece=" + topPuzzlePiece + "\n" +
+                ",bottomPuzzlePiece=" + bottomPuzzlePiece + "\n" +
+                ",leftPuzzlePiece=" + leftPuzzlePiece + "\n" +
+                ",rightPuzzlePiece=" + rightPuzzlePiece + "\n" +
+                ",backPuzzlePiece=" + backPuzzlePiece + "\n" +
+                ",frontPuzzlePiece=" + frontPuzzlePiece + "\n" +
                 '}';
     }
 }

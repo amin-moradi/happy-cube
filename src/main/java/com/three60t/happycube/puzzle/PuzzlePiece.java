@@ -110,10 +110,6 @@ public final class PuzzlePiece {
         }
     }
 
-    public boolean isThisMirror() {
-        return isMirror();
-    }
-
     private Integer getReverseDecimalValue(PuzzlePieceEdge edge) {
         switch (edge) {
             case TOP:
@@ -148,14 +144,14 @@ public final class PuzzlePiece {
     public String toString() {
         return "PuzzlePiece{" +
                 " id=" + id +
-                ", topDecimalValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(topDecimalValue))) +
-                ", rightDecimalValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(rightDecimalValue))) +
-                ", bottomDecimalValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(bottomDecimalValue))) +
-                ", leftDecimalValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(leftDecimalValue))) +
-                ", reverseTopDecimalValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(reverseTopDecimalValue))) +
-                ", reverseRightDecimalValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(reverseRightDecimalValue))) +
-                ", reverseBottomDecimalValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(reverseBottomDecimalValue))) +
-                ", reverseLeftDecimalValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(reverseLeftDecimalValue))) +
+                ", topBinaryValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(topDecimalValue))) +
+                ", rightBinaryValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(rightDecimalValue))) +
+                ", bottomBinaryValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(bottomDecimalValue))) +
+                ", leftBinaryValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(leftDecimalValue))) +
+                ", reverseTopBinaryValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(reverseTopDecimalValue))) +
+                ", reverseRightBinaryValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(reverseRightDecimalValue))) +
+                ", reverseBottomBinaryValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(reverseBottomDecimalValue))) +
+                ", reverseLeftBinaryValue=" + String.format("%05d", Integer.parseInt(Integer.toBinaryString(reverseLeftDecimalValue))) +
                 ", isMirror=" + isMirror +
                 '}';
     }
