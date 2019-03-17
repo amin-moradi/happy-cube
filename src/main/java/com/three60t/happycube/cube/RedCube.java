@@ -203,11 +203,11 @@ public class RedCube extends AbstractCube {
         cubeArray[5][4][3] = 1;
         cubeArray[5][4][4] = 1;
 
-        return new Puzzle(new PuzzlePiece(cubeArray[0]),
-                new PuzzlePiece(cubeArray[1]),
-                new PuzzlePiece(cubeArray[2]),
-                new PuzzlePiece(cubeArray[3]),
-                new PuzzlePiece(cubeArray[4]),
-                new PuzzlePiece(cubeArray[5]));
+        return new Puzzle(new PuzzlePiece(cubeArray[0], 1),
+                new PuzzlePiece(cubeArray[1], 2),
+                new PuzzlePiece(cubeArray[2], 3),
+                new PuzzlePiece(cubeArray[3], 4),
+                new PuzzlePiece(cubeArray[4], 5),
+                new PuzzlePiece(cubeArray[5], 6));
     }
 }
