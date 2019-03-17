@@ -11,12 +11,14 @@ public class Orientation {
     private PuzzlePieceEdge edge2;
     private PuzzlePieceEdge edge3;
     private PuzzlePieceEdge edge4;
+    private boolean isMirror;
 
-    public Orientation(PuzzlePieceEdge edge1, PuzzlePieceEdge edge2, PuzzlePieceEdge edge3, PuzzlePieceEdge edge4) {
+    public Orientation(PuzzlePieceEdge edge1, PuzzlePieceEdge edge2, PuzzlePieceEdge edge3, PuzzlePieceEdge edge4, boolean isMirror) {
         this.edge1 = edge1;
         this.edge2 = edge2;
         this.edge3 = edge3;
         this.edge4 = edge4;
+        this.isMirror = isMirror;
     }
 
     public PuzzlePieceEdge getEdge1() {
@@ -33,5 +35,9 @@ public class Orientation {
 
     public PuzzlePieceEdge getEdge4() {
         return edge4;
+    }
+
+    public boolean isMirror() {
+        return isMirror;
     }
 }
