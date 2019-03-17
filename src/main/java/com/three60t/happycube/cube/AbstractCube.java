@@ -11,11 +11,18 @@ import com.three60t.happycube.puzzle.PuzzlePiece;
 import com.three60t.happycube.utils.Permutations;
 import org.apache.log4j.Logger;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -104,7 +111,26 @@ public abstract class AbstractCube implements Cube {
 
     @Override
     public void saveSolutions() {
-        //todo save solutions to file
+        //save solution in unfolded format in a file
+        //todo I have to check the result (It can be cleaner and more readable)
+        String directory = "output";
+        File dir = new File(directory);
+        if (!dir.exists()) dir.mkdirs();
+        AtomicInteger counter = new AtomicInteger(1);
+        solutions.forEach((number, solutionPuzzle) -> {
+            StringBuilder result = new StringBuilder();
+            result.append(solutionPuzzle.getBackPuzzlePiece().getOutputFormat(1));
+            result.append(solutionPuzzle.getSecondRowOutputFormat());
+            result.append(solutionPuzzle.getFrontPuzzlePiece().getOutputFormat(3));
+            result.append(solutionPuzzle.getTopPuzzlePiece().getOutputFormat(4));
+            Path path = Paths.get(directory + "/solution" + counter.getAndIncrement() + ".txt");
+            try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+                writer.write(result.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
     }
 
     /**

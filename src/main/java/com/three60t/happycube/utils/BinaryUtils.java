@@ -16,4 +16,9 @@ public class BinaryUtils {
         String binaryValue = String.format("%05d", Integer.parseInt(Integer.toBinaryString(x)));
         return Integer.parseInt(new StringBuffer(binaryValue).reverse().toString(), 2);
     }
+
+    public static int getNthBit(Integer edgeValue, int bitPosition) {
+        Double bitValue = Math.pow(2.0, bitPosition);
+        return (edgeValue & bitValue.intValue()) == bitValue ? 1 : 0;
+    }
 }

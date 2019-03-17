@@ -140,6 +140,45 @@ public final class PuzzlePiece {
         }
     }
 
+    public StringBuilder getOutputFormat(int row) {
+        StringBuilder result = new StringBuilder();
+        CharSequence cSeq = "     ";
+        int[][] puzzlePieceArray = new int[5][5];
+        for (int i = 0; i < 5; i++) {
+            StringBuilder builder;
+            if (row != 2) {
+                builder = new StringBuilder(cSeq);
+            } else {
+                builder = new StringBuilder();
+            }
+            for (int j = 0; j < 5; j++) {
+                if (i == 0) {
+                    puzzlePieceArray[i][j] = BinaryUtils.getNthBit(isMirror() ? getReverseTopDecimalValue() : getTopDecimalValue(), j);
+                } else if (i == 4) {
+                    puzzlePieceArray[i][j] = BinaryUtils.getNthBit(isMirror() ? getReverseBottomDecimalValue() : getBottomDecimalValue(), j);
+                } else if (j == 0) {
+                    puzzlePieceArray[i][j] = BinaryUtils.getNthBit(isMirror() ? getReverseLeftDecimalValue() : getLeftDecimalValue(), i);
+                } else if (j == 4) {
+                    puzzlePieceArray[i][j] = BinaryUtils.getNthBit(isMirror() ? getReverseRightDecimalValue() : getRightDecimalValue(), i);
+                } else {
+                    puzzlePieceArray[i][j] = 1;
+                }
+                if (puzzlePieceArray[i][j] == 1) {
+                    builder.append("o");
+                } else {
+                    builder.append(" ");
+                }
+            }
+
+            builder.append(cSeq);
+            if (i != 4 || row != 2) {
+                builder.append("\n");
+            }
+            result.append(builder);
+        }
+        return result;
+    }
+
     @Override
     public String toString() {
         return "PuzzlePiece{" +

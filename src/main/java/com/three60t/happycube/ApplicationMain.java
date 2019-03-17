@@ -16,9 +16,11 @@ public class ApplicationMain {
     public static void main(String[] args) {
         BasicConfigurator.configure();
 
-        Cube blueCube = new RedCube();
-        if (blueCube.findSolutions().size() == 0) {
+        Cube redCube = new RedCube();
+        if (redCube.findSolutions().size() == 0) {
             logger.debug("Nothing found!");
+        } else {
+            redCube.saveSolutions();
         }
     }
 }
