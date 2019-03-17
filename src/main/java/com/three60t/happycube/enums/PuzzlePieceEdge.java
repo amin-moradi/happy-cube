@@ -10,5 +10,5 @@ public enum PuzzlePieceEdge {
     TOP,
     BOTTOM,
     LEFT,
-    RIGHT;
+    RIGHT
 }

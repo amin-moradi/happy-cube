@@ -12,7 +12,7 @@ import org.junit.Test;
  * @since 3/15/19
  */
 public class EdgeMiddleMatchConditionTest {
-    final static Puzzle puzzle;
+    private final static Puzzle puzzle;
 
     static {
         puzzle = new BlueCube().getInputPuzzle();

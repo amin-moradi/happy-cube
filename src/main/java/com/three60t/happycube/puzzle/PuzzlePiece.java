@@ -121,7 +121,7 @@ public final class PuzzlePiece {
             case LEFT:
                 return getReverseLeftDecimalValue();
             default:
-                return null;
+                throw new IllegalArgumentException("PuzzlePieceEdge is not valid!");
         }
     }
 
@@ -136,7 +136,7 @@ public final class PuzzlePiece {
             case LEFT:
                 return getLeftDecimalValue();
             default:
-                return null;
+                throw new IllegalArgumentException("PuzzlePieceEdge is not valid!");
         }
     }
 
@@ -151,6 +151,7 @@ public final class PuzzlePiece {
             } else {
                 builder = new StringBuilder();
             }
+            //todo duplicate code!
             for (int j = 0; j < 5; j++) {
                 if (i == 0) {
                     puzzlePieceArray[i][j] = BinaryUtils.getNthBit(isMirror() ? getReverseTopDecimalValue() : getTopDecimalValue(), j);

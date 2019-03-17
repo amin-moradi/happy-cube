@@ -26,6 +26,6 @@ public enum PuzzleSide {
                 return v;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Input value is not valid!");
     }
 }

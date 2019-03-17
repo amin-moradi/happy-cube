@@ -96,6 +96,7 @@ public final class Puzzle {
     private StringBuilder printRow(int i, PuzzlePiece puzzlePiece) {
         StringBuilder builder = new StringBuilder();
         int[][] puzzlePieceArray = new int[5][5];
+        //todo duplicate code!
         for (int j = 0; j < 5; j++) {
             if (i == 0) {
                 puzzlePieceArray[i][j] = BinaryUtils.getNthBit(puzzlePiece.isMirror() ? puzzlePiece.getReverseTopDecimalValue() : puzzlePiece.getTopDecimalValue(), j);
