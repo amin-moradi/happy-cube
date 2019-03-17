@@ -38,7 +38,7 @@ public final class PuzzlePiece {
         this.reverseRightDecimalValue = BinaryUtils.reverseBits(this.getRightDecimalValue());
         this.reverseBottomDecimalValue = BinaryUtils.reverseBits(this.getBottomDecimalValue());
         this.reverseLeftDecimalValue = BinaryUtils.reverseBits(this.getLeftDecimalValue());
-        this.isMirror = null;
+        this.isMirror = false;
     }
 
     public PuzzlePiece(PuzzlePiece puzzlePiece, Orientation orientation) {
