@@ -3,6 +3,7 @@ package com.three60t.happycube.condition;
 import com.three60t.happycube.enums.PuzzlePieceEdge;
 import com.three60t.happycube.enums.PuzzleSide;
 import com.three60t.happycube.puzzle.Puzzle;
+import com.three60t.happycube.utils.BinaryUtils;
 
 /**
  * @author Hossein Moradi
@@ -24,6 +25,9 @@ public class EdgeMiddleMatchCondition implements Condition {
 
     @Override
     public boolean isMatchCondition(Puzzle puzzle) {
-        return (((puzzle.getEdgeDecimalValue(side1, edge1) & MIDDLE_PUZZLE_VALUE) ^ (puzzle.getEdgeDecimalValue(side2, edge2) & MIDDLE_PUZZLE_VALUE)) == MIDDLE_PUZZLE_VALUE);
+        int mask1 = puzzle.getEdgeDecimalValue(side1, edge1) & MIDDLE_PUZZLE_VALUE;
+        // for mask --> we reverse second value, because we first puzzle-piece must match with reverse of second puzzle-piece
+        int mask2 = BinaryUtils.reverseBits(puzzle.getEdgeDecimalValue(side2, edge2)) & MIDDLE_PUZZLE_VALUE;
+        return (mask1 ^ mask2) == MIDDLE_PUZZLE_VALUE;
     }
 }
