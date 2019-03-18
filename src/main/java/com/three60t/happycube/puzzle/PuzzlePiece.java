@@ -4,6 +4,8 @@ import com.three60t.happycube.enums.PuzzlePieceEdge;
 import com.three60t.happycube.orientation.Orientation;
 import com.three60t.happycube.utils.BinaryUtils;
 
+import java.util.Arrays;
+
 /**
  * This class contains decimal values of each edge of puzzle-piece (4 edges --> top, bottom, left, right)
  *
@@ -140,44 +142,53 @@ public final class PuzzlePiece {
         }
     }
 
-    public StringBuilder getOutputFormat(int row) {
-        StringBuilder result = new StringBuilder();
-        CharSequence cSeq = "     ";
-        int[][] puzzlePieceArray = new int[5][5];
-        for (int i = 0; i < 5; i++) {
-            StringBuilder builder;
-            if (row != 2) {
-                builder = new StringBuilder(cSeq);
-            } else {
-                builder = new StringBuilder();
-            }
-            //todo duplicate code!
-            for (int j = 0; j < 5; j++) {
-                if (i == 0) {
-                    puzzlePieceArray[i][j] = BinaryUtils.getNthBit(isMirror() ? getReverseTopDecimalValue() : getTopDecimalValue(), j);
-                } else if (i == 4) {
-                    puzzlePieceArray[i][j] = BinaryUtils.getNthBit(isMirror() ? getReverseBottomDecimalValue() : getBottomDecimalValue(), j);
-                } else if (j == 0) {
-                    puzzlePieceArray[i][j] = BinaryUtils.getNthBit(isMirror() ? getReverseLeftDecimalValue() : getLeftDecimalValue(), i);
-                } else if (j == 4) {
-                    puzzlePieceArray[i][j] = BinaryUtils.getNthBit(isMirror() ? getReverseRightDecimalValue() : getRightDecimalValue(), i);
-                } else {
-                    puzzlePieceArray[i][j] = 1;
-                }
-                if (puzzlePieceArray[i][j] == 1) {
-                    builder.append("o");
-                } else {
-                    builder.append(" ");
-                }
-            }
+    /**
+     * This method generate base puzzle data in array
+     * @return : an array with puzzle data - 1 represents fill cell and 0 represents empty cell
+     */
+    public int[][] getArrayPuzzle() {
+        int[][] arrayPuzzle = new int[5][5];
+        //fill all cells with 1
+        for (int x = 0; x < arrayPuzzle.length; x++)
+            Arrays.fill(arrayPuzzle[x], 1);
 
-            builder.append(cSeq);
-            if (i != 4 || row != 2) {
-                builder.append("\n");
-            }
-            result.append(builder);
-        }
-        return result;
+        //fill top edge of array
+        String topBinaryString = Integer.toBinaryString(getDecimalValueBySideAndMirror(PuzzlePieceEdge.TOP));
+        char[] topCharArray = String.format("%05d", Integer.parseInt(topBinaryString)).toCharArray();
+        arrayPuzzle[0][0] = Character.getNumericValue(topCharArray[0]);
+        arrayPuzzle[0][1] = Character.getNumericValue(topCharArray[1]);
+        arrayPuzzle[0][2] = Character.getNumericValue(topCharArray[2]);
+        arrayPuzzle[0][3] = Character.getNumericValue(topCharArray[3]);
+        arrayPuzzle[0][4] = Character.getNumericValue(topCharArray[4]);
+
+        //fill right edge of array
+        String rightBinaryString = Integer.toBinaryString(getDecimalValueBySideAndMirror(PuzzlePieceEdge.RIGHT));
+        char[] rightCharArray = String.format("%05d", Integer.parseInt(rightBinaryString)).toCharArray();
+        arrayPuzzle[0][4] = Character.getNumericValue(rightCharArray[0]);
+        arrayPuzzle[1][4] = Character.getNumericValue(rightCharArray[1]);
+        arrayPuzzle[2][4] = Character.getNumericValue(rightCharArray[2]);
+        arrayPuzzle[3][4] = Character.getNumericValue(rightCharArray[3]);
+        arrayPuzzle[4][4] = Character.getNumericValue(rightCharArray[4]);
+
+        //fill bottom edge of array
+        String bottomBinaryString = Integer.toBinaryString(getDecimalValueBySideAndMirror(PuzzlePieceEdge.BOTTOM));
+        char[] bottomCharArray = String.format("%05d", Integer.parseInt(bottomBinaryString)).toCharArray();
+        arrayPuzzle[4][4] = Character.getNumericValue(bottomCharArray[0]);
+        arrayPuzzle[4][3] = Character.getNumericValue(bottomCharArray[1]);
+        arrayPuzzle[4][2] = Character.getNumericValue(bottomCharArray[2]);
+        arrayPuzzle[4][1] = Character.getNumericValue(bottomCharArray[3]);
+        arrayPuzzle[4][0] = Character.getNumericValue(bottomCharArray[4]);
+
+        //fill left edge of array
+        String leftBinaryString = Integer.toBinaryString(getDecimalValueBySideAndMirror(PuzzlePieceEdge.LEFT));
+        char[] leftCharArray = String.format("%05d", Integer.parseInt(leftBinaryString)).toCharArray();
+        arrayPuzzle[4][0] = Character.getNumericValue(leftCharArray[0]);
+        arrayPuzzle[3][0] = Character.getNumericValue(leftCharArray[1]);
+        arrayPuzzle[2][0] = Character.getNumericValue(leftCharArray[2]);
+        arrayPuzzle[1][0] = Character.getNumericValue(leftCharArray[3]);
+        arrayPuzzle[0][0] = Character.getNumericValue(leftCharArray[4]);
+
+        return arrayPuzzle;
     }
 
     @Override

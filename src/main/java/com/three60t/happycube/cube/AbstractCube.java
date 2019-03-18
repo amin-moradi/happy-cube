@@ -111,26 +111,100 @@ public abstract class AbstractCube implements Cube {
 
     @Override
     public void saveSolutions() {
-        //save solution in unfolded format in a file
-        //todo I have to check the result (It can be cleaner and more readable)
+        //save solutions in unfolded format in a separate files for each solution (At this time, we have just one solution)
+        // The result will print in 3 rows and each row have 4 columns:
+        //
+        // row1 -->        col2
+        // row2 -->  col1  clo2  col3  col4
+        // row2 -->        clo2
+        //
+        //Example (of red cube):
+        //
+        //      oo o
+        //      ooo
+        //     ooooo
+        //      ooo
+        //     oo
+        // o o   oo oo oo  o
+        //oooo ooooo ooo oooo
+        // oooo ooo ooooo oooo
+        //oooo ooooo ooo oooo
+        // o   o o   oo    o
+        //      o oo
+        //     oooo
+        //     oooo
+        //      oooo
+        //     oo oo
+        //
         String directory = "output";
         File dir = new File(directory);
         if (!dir.exists()) dir.mkdirs();
         AtomicInteger counter = new AtomicInteger(1);
         solutions.forEach((number, solutionPuzzle) -> {
-            StringBuilder result = new StringBuilder();
-            result.append(solutionPuzzle.getBackPuzzlePiece().getOutputFormat(1));
-            result.append(solutionPuzzle.getSecondRowOutputFormat());
-            result.append(solutionPuzzle.getFrontPuzzlePiece().getOutputFormat(3));
-            result.append(solutionPuzzle.getTopPuzzlePiece().getOutputFormat(4));
+            StringBuilder rowStringValue1 = generateRowStringValue(null, solutionPuzzle.getTopPuzzlePiece(), null, null);
+            StringBuilder rowStringValue2 = generateRowStringValue(solutionPuzzle.getLeftPuzzlePiece(), solutionPuzzle.getFrontPuzzlePiece(), solutionPuzzle.getRightPuzzlePiece(), solutionPuzzle.getBackPuzzlePiece());
+            StringBuilder rowStringValue3 = generateRowStringValue(null, solutionPuzzle.getBottomPuzzlePiece(), null, null);
             Path path = Paths.get(directory + "/solution" + counter.getAndIncrement() + ".txt");
             try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-                writer.write(result.toString());
+                writer.write(rowStringValue1.append(rowStringValue2).append(rowStringValue3).toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
+    }
+
+    /**
+     *
+     * This method is responsible for create whole text of each row that will place into file (we have 3 rows)
+     * colX with value null means there is no puzzle-piece in that column
+     *
+     * @param col1 : is puzzle-piece data of column1 (nullable)
+     * @param col2 : is puzzle-piece data of column1 (nullable)
+     * @param col3 : is puzzle-piece data of column1 (nullable)
+     * @param col4 : is puzzle-piece data of column1 (nullable)
+     * @return
+     */
+    private StringBuilder generateRowStringValue(PuzzlePiece col1, PuzzlePiece col2, PuzzlePiece col3, PuzzlePiece col4) {
+        StringBuilder builder = new StringBuilder();
+        int[][] arrayPuzzle1 = col1 != null ? col1.getArrayPuzzle() : null;
+        int[][] arrayPuzzle2 = col2 != null ? col2.getArrayPuzzle() : null;
+        int[][] arrayPuzzle3 = col3 != null ? col3.getArrayPuzzle() : null;
+        int[][] arrayPuzzle4 = col4 != null ? col4.getArrayPuzzle() : null;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 20; j++) {
+                if (j < 5) {
+                    if (col1 != null) {
+                        builder.append(arrayPuzzle1[i][j] == 1 ? "o" : " ");
+                    } else {
+                        builder.append(" ");
+                    }
+                } else if (j < 10) {
+                    int jj = j - 5;
+                    if (col2 != null) {
+                        builder.append(arrayPuzzle2[i][jj] == 1 ? "o" : " ");
+                    } else {
+                        builder.append(" ");
+                    }
+                } else if (j < 15) {
+                    int jj = j - 10;
+                    if (col3 != null) {
+                        builder.append(arrayPuzzle3[i][jj] == 1 ? "o" : " ");
+                    } else {
+                        builder.append(" ");
+                    }
+                } else {
+                    int jj = j - 15;
+                    if (col4 != null) {
+                        builder.append(arrayPuzzle4[i][jj] == 1 ? "o" : " ");
+                    } else {
+                        builder.append(" ");
+                    }
+                }
+            }
+            builder.append("\n");
+        }
+        return builder;
     }
 
     /**
